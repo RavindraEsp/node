@@ -62,7 +62,7 @@ const add = function (a, b, callback) {
 
 
 add(32, 39, function () {
-    console.log('call back call on shhort');
+    console.log('call back call on start end');
 
 });
 
