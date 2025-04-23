@@ -1,68 +1,27 @@
-console.log('Server file is running ======> ');
+//import express from 'express'
+
+const express = require('express');
+const app = express()
+
+app.get('/', (req, res) => {
+  res.send('Wlcome to hotel how can i help you Hello World')
+})
 
 
-//function code start 
-// how to write function in js
-//1.
-// function add(a,b){
-//     return a+b;
-// }
-
-//2.
-// var add = function(a,b) {
-//     return a+b;
-// }
-
-//3.
-//var add = (a,b) =>  {return a+b};
-
-//4.
-//var add = (a,b) => a+b;
-
-
-//call the method 
-//var result = add(23,30);
-
-//console.log('Result is '+result);
-
-
-// function code end
+app.get('/message', (req, res) => {
+    res.send('Wlcome to hotel yadav ji How can we help You.')
+  })
 
 
 
-// call back function long way 
-/*
-function callbackmethod(){
+  app.get('/idli', (req, res) => {
+    var customized_idli = {
+        name : "rava itli",
+        size: "10 cm diameter",
+        is_samber: true,
+        is_chutny:false
+    }
+    res.send(customized_idli)
+  })
 
-   console.log('call back call ');
-
-}
-
-
-const add  = function(a,b,callback){
-var result = a+b;
-
-console.log('Result '+result);
- callback();
-}
-
-
-add(32,39,callbackmethod);
-
-*/
-
-
-// call back function short way 
-
-const add = function (a, b, callback) {
-    var result = a + b;
-    console.log('Result ' + result);
-    callback();
-}
-
-
-add(32, 39, function () {
-    console.log('call back call on start end');
-
-});
-
+app.listen(3000,()=> console.log("listining on port 3000"))
