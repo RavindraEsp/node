@@ -1,12 +1,21 @@
 const mongoose = require('mongoose')  // export mongodb 
 
+require('dotenv').config();   // env file import and config
+
+
+
 // define the mongodb connection url 
 
-//const mongoURL = 'mongodb://localhost:127.0.0.1:27017/hotels'  // Hotels name database me data store 
+ //const mongoURL = 'mongodb://127.0.0.1:27017/hotels'  // Hotels name ke database me data store 
+//const mongoURL = 'mongodb+srv://ravindra:test1234@cluster0.s9rmmbf.mongodb.net/'  // Hotels name ke database me data store 
 
 
-const mongoURL = 'mongodb://127.0.0.1:27017/hotels'  // Hotels name ke database me data store 
+ //local database se conect 
 
+//const mongoURL = process.env.MONGODB_URL_LOCAL;
+const mongoURL = process.env.MONGODB_URL;
+
+//online data base cluster name se bana h 
 
 console.log("Db file called");
 

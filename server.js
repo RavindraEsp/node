@@ -4,11 +4,14 @@ const app = express()
 
 const db = require('./db');  // export db file from db.js to run it and start the mongo db server 
 
+require('dotenv').config();   // env file import and config
+
+const PORT = process.env.PORT || 3000 // itmeans ennv me PORT me kuchh number h to vo use karenngfa othher vise 3000 use hoga
+
+
 const Person = require('./models/Person');  // export person file from modules directory 
 
 //menu
-
-
 
 
 const bodyParser = require('body-parser') //npm package user for parse api request
@@ -47,4 +50,6 @@ const menuRoutes = require('./routes/menuRoutes');
 app.use('/person',personRoutes);
 app.use('/menuItem',menuRoutes);
 
-app.listen(3000, () => console.log("listining on port 3000"))
+
+
+app.listen(PORT, () => console.log("listining on port 3000"))
