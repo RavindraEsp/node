@@ -12,8 +12,8 @@ require('dotenv').config();   // env file import and config
 
  //local database se conect 
 
-//const mongoURL = process.env.MONGODB_URL_LOCAL; //(Local Database url) 
-const mongoURL = process.env.MONGODB_URL; //(Online Database url) 
+const mongoURL = process.env.MONGODB_URL_LOCAL; //(Local Database url) 
+//const mongoURL = process.env.MONGODB_URL; //(Online Database url) 
 
 //online data base cluster name se bana h 
 

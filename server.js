@@ -1,22 +1,30 @@
 //import express from 'express'
 const express = require('express');
 const app = express()
-
-const db = require('./db');  // export db file from db.js to run it and start the mongo db server 
-
 require('dotenv').config();   // env file import and config
 
-const PORT = process.env.PORT || 3000 // itmeans ennv me PORT me kuchh number h to vo use karenngfa othher vise 3000 use hoga
-
-
+const db = require('./db');  // export db file from db.js to run it and start the mongo db server 
 const Person = require('./models/Person');  // export person file from modules directory 
 
 //menu
 
 
+
+
 const bodyParser = require('body-parser') //npm package user for parse api request
 app.use(bodyParser.json()); //req.body
+const PORT = process.env.PORT || 3000 // itmeans ennv me PORT me kuchh number h to vo use karenngfa othher vise 3000 use hoga
 
+
+
+//Midleware function 
+const logRequest = (req, res, next) => {
+  console.log("TEST MIDDLEWARE - This should print");
+  console.log(`${new Date().toLocaleString()} Request Made to: ${req.originalUrl}`);
+  next();
+}
+
+app.use(logRequest);
 
 
 app.get('/', (req, res) => {
