@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
         //create a new person documen using the mongodb  model
         const newPerson = new Person(data);
         const response = await newPerson.save();
-        console.log("Data saved successfully");
+        console.log("Person Data saved successfully");
         res.status(200).json(response);
     } catch (err) {
         console.log("Error => --  ", err);
@@ -98,7 +98,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const data = await Person.find();
-        console.log("Data Fetched successfully");
+        console.log("Person Data Fetched successfully");
         res.status(200).json(data);
     } catch (err) {
         console.log("Error => --  ", err);

@@ -6,14 +6,14 @@ require('dotenv').config();   // env file import and config
 
 // define the mongodb connection url 
 
- //const mongoURL = 'mongodb://127.0.0.1:27017/hotels'  // Hotels name ke database me data store 
-//const mongoURL = 'mongodb+srv://ravindra:test1234@cluster0.s9rmmbf.mongodb.net/'  // Hotels name ke database me data store 
+// const mongoURL = 'mongodb://127.0.0.1:27017/hotels'  // Hotels name ke database me data store (local database)
+//const mongoURL = 'mongodb+srv://ravindra:test1234@cluster0.s9rmmbf.mongodb.net/'  // Hotels name ke database me data store(Online Database) 
 
 
  //local database se conect 
 
-//const mongoURL = process.env.MONGODB_URL_LOCAL;
-const mongoURL = process.env.MONGODB_URL;
+//const mongoURL = process.env.MONGODB_URL_LOCAL; //(Local Database url) 
+const mongoURL = process.env.MONGODB_URL; //(Online Database url) 
 
 //online data base cluster name se bana h 
 
