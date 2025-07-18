@@ -54,3 +54,6 @@ app.use('/menuItem',menuRoutes);
 
 
 app.listen(PORT, () => console.log("listining on port 3000"))
+
+// Local Server URl => http://localhost:3000
+// Live server url => https://hotels-prnj.onrender.com
