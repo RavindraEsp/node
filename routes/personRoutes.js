@@ -13,7 +13,25 @@ const Person = require('./../models/Person');  // export person file from module
 //Means: “go one level up (parent directory), then look for a models folder.”
 
 
-router.post('/', async (req, res) => {
+const { jwtAuthMiddleware, generateToken } = require('./../jwt');  // export person file from modules directory 
+
+
+// router.post('/', async (req, res) => {
+
+//     try {
+//         const data = req.body //Assuming the req body contain he person data 
+//         //create a new person documen using the mongodb  model
+//         const newPerson = new Person(data);
+//         const response = await newPerson.save();
+//         console.log("Person Data saved successfully");
+//         res.status(200).json(response);
+//     } catch (err) {
+//         console.log("Error => --  ", err);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// }
+
+router.post('/signup', async (req, res) => {
 
     try {
         const data = req.body //Assuming the req body contain he person data 
@@ -21,7 +39,18 @@ router.post('/', async (req, res) => {
         const newPerson = new Person(data);
         const response = await newPerson.save();
         console.log("Person Data saved successfully");
-        res.status(200).json(response);
+
+        const token = generateToken(response.username);
+
+        console.log("Tpken is : ", token);
+
+
+
+        res.status(200).json({
+            response, token: token
+        });
+
+        
     } catch (err) {
         console.log("Error => --  ", err);
         res.status(500).json({ error: 'Internal server error' });
