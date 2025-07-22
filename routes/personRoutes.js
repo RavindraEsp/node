@@ -13,7 +13,7 @@ const Person = require('./../models/Person');  // export person file from module
 //Means: “go one level up (parent directory), then look for a models folder.”
 
 
-const { jwtAuthMiddleware, generateToken } = require('./../jwt');  // export person file from modules directory 
+const {jwtAuthMiddleware, generateToken} = require('./../jwt');  // export person file from modules directory 
 
 
 // router.post('/', async (req, res) => {

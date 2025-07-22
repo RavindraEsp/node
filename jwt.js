@@ -8,7 +8,7 @@ const jwtAuthMiddleware = (req, res, next) => {
     //Extract the jwt token from the request header
     const token = req.headers.authorization.split(' ')[1];
     if (!token) return res.status(401).json({
-     error: "Unauthorized"
+        error: "Unauthorized"
     });
 
     try {
@@ -41,4 +41,4 @@ const generateToken = (userData) => {
 
 //module.export = jwtAuthMiddleware;  // return 1 method 
 
-module.export = { jwtAuthMiddleware, generateToken };  // return multiple method 
+module.exports = {jwtAuthMiddleware,generateToken};  // return multiple method 
