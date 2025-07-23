@@ -6,11 +6,8 @@ require('dotenv').config();   // env file import and config
 const jwtAuthMiddleware = (req, res, next) => {
 
     // First check the request headers has authorization or not 
-
     const autherization = req.headers.authorization;
-
     if (!autherization) {
-
         return res.status(401).json({
             error: "Token not found"
         });
@@ -26,9 +23,7 @@ const jwtAuthMiddleware = (req, res, next) => {
 
         //Verify the jwt token 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
         //Attach user information to the request object
-
         req.user = decoded;  // Added new key req key name user 
         next();
 

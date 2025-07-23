@@ -234,9 +234,9 @@ router.put('/profileUpdate', jwtAuthMiddleware, async (req, res) => {
 
         console.log("User id is ", userId);
 
-        // if (!mongoose.Types.ObjectId.isValid(userId)) {
-        //     return res.status(400).json({ error: "Invalid person ID format" });
-        // }
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid person ID format" });
+        }
 
         const response = await Person.findByIdAndUpdate(userId, updatedPersonData, {
             new: true, // return the updated document
@@ -251,16 +251,7 @@ router.put('/profileUpdate', jwtAuthMiddleware, async (req, res) => {
         }
 
         console.log("Data updated successfully");
-        res.status(200).json(response);
-
-
-        res.status(200).json({ user });
-
-
-
-
-
-
+       return res.status(200).json(response);
 
     } catch (err) {
         console.log("Error => --  ", err);
