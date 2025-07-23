@@ -13,7 +13,7 @@ const Person = require('./../models/Person');  // export person file from module
 //Means: “go one level up (parent directory), then look for a models folder.”
 
 
-const {jwtAuthMiddleware, generateToken} = require('./../jwt');  // export person file from modules directory 
+const { jwtAuthMiddleware, generateToken } = require('./../jwt');  // export person file from modules directory 
 
 
 // router.post('/', async (req, res) => {
@@ -40,9 +40,15 @@ router.post('/signup', async (req, res) => {
         const response = await newPerson.save();
         console.log("Person Data saved successfully");
 
-        const token = generateToken(response.username);
+        const payload = {
+            id: response.id,
+            username: response.username
+        };
 
-        console.log("Tpken is : ", token);
+        console.log("Payload  is : ", JSON.stringify(payload));
+        const token = generateToken(payload); // ye payload data token me rahta h 
+
+        console.log("Token is : ", token);
 
 
 
@@ -50,7 +56,7 @@ router.post('/signup', async (req, res) => {
             response, token: token
         });
 
-        
+
     } catch (err) {
         console.log("Error => --  ", err);
         res.status(500).json({ error: 'Internal server error' });
@@ -58,6 +64,56 @@ router.post('/signup', async (req, res) => {
 }
 
 )
+
+
+router.post('/login', async (req, res) => {
+
+    try {
+        //Extract username and password from the req body
+        const { username, password } = req.body;
+
+
+        const user = await Person.findOne({ username: username });
+
+        if (!user || !(await user.comparePassword(password))) {
+
+            return res.status(401).json({
+                error: "Invalid username and password"
+            });
+
+        }
+
+
+        // generate token 
+
+
+        const payload = {
+            id: user.id,
+            username: user.username
+        };
+
+        console.log("Payload  is : ", JSON.stringify(payload));
+        const token = generateToken(payload); // ye payload data token me rahta h 
+
+        console.log("Token is : ", token);
+
+
+        // Return token in response 
+
+        res.status(200).json({
+            token: token
+        });
+
+
+    } catch (err) {
+        console.log("Error => --  ", err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+)
+
+
 
 
 router.put('/:id', async (req, res) => {
@@ -124,7 +180,7 @@ router.delete('/:id', async (req, res) => {
 
 //Get method to get person data 
 
-router.get('/', async (req, res) => {
+router.get('/', jwtAuthMiddleware, async (req, res) => {
     try {
         const data = await Person.find();
         console.log("Person Data Fetched successfully");
@@ -134,6 +190,29 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 })
+
+
+
+
+//Get method to fetch profile
+
+router.get('/profile', jwtAuthMiddleware, async (req, res) => {
+    try {
+
+        const userData = req.user;
+        console.log("User data is ", userData);
+
+         const userId = userData.id;
+
+        const user = await Person.findById(userId); // jo name dete h vo response me return hota h abhi user key return hogi 
+        console.log("Person Profile Fetched successfully");
+        res.status(200).json({user});
+    } catch (err) {
+        console.log("Error => --  ", err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
 
 
 router.get('/:workType', async (req, res) => {

@@ -5,6 +5,17 @@ require('dotenv').config();   // env file import and config
 
 const jwtAuthMiddleware = (req, res, next) => {
 
+    // First check the request headers has authorization or not 
+
+    const autherization = req.headers.authorization;
+
+    if (!autherization) {
+
+        return res.status(401).json({
+            error: "Token not found"
+        });
+    }
+
     //Extract the jwt token from the request header
     const token = req.headers.authorization.split(' ')[1];
     if (!token) return res.status(401).json({
@@ -24,7 +35,7 @@ const jwtAuthMiddleware = (req, res, next) => {
 
     } catch (err) {
         console.error(err);
-        res.status(401).json({
+        return res.status(403).json({
             error: "Invalid token"
         });
 
@@ -36,9 +47,9 @@ const jwtAuthMiddleware = (req, res, next) => {
 
 const generateToken = (userData) => {
     //Generate a new jwt token using user data
-    return jwt.sign(userData, process.env.JWT_SECRET);
+    return jwt.sign({ userData }, process.env.JWT_SECRET, { expiresIn: 300000 }); //userData object me hona chahiye nahi to bahut bar expire time will not work 
 }
 
 //module.export = jwtAuthMiddleware;  // return 1 method 
 
-module.exports = {jwtAuthMiddleware,generateToken};  // return multiple method 
+module.exports = { jwtAuthMiddleware, generateToken };  // return multiple method 

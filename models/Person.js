@@ -78,7 +78,7 @@ personSchema.pre('save', async function (next) {
 
 
 //create method in person schema
-personSchema.method.comparePassword = async function (candidatePassword) {
+personSchema.methods.comparePassword = async function (candidatePassword) {
     try{
         
         // Use bcrypt to compatre the provided password with the hashed password
