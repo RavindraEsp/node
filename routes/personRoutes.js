@@ -114,42 +114,40 @@ router.post('/login', async (req, res) => {
 )
 
 
+// router.put('/:id', async (req, res) => {
+
+//     try {
+//         const personId = req.params.id; // Extract the person id 
+//         const updatedPersonData = req.body // update data for person 
+
+//         // Validate ObjectId format
+//         if (!mongoose.Types.ObjectId.isValid(personId)) {
+//             return res.status(400).json({ error: "Invalid person ID format" });
+//         }
+
+//         const response = await Person.findByIdAndUpdate(personId, updatedPersonData, {
+//             new: true, // return the updated document
+//             runValidators: true, // run mongoes validation
+//         });
+//         console.log("Response is ");
+//         console.log(response);
 
 
-router.put('/:id', async (req, res) => {
+//         if (!response) {
+//             return res.status(404).json({ error: "Person not found" });
+//         }
 
-    try {
-        const personId = req.params.id; // Extract the person id 
-        const updatedPersonData = req.body // update data for person 
-
-        // Validate ObjectId format
-        if (!mongoose.Types.ObjectId.isValid(personId)) {
-            return res.status(400).json({ error: "Invalid person ID format" });
-        }
-
-        const response = await Person.findByIdAndUpdate(personId, updatedPersonData, {
-            new: true, // return the updated document
-            runValidators: true, // run mongoes validation
-        });
-        console.log("Response is ");
-        console.log(response);
+//         console.log("Data updated successfully");
+//         res.status(200).json(response);
 
 
-        if (!response) {
-            return res.status(404).json({ error: "Person not found" });
-        }
+//     } catch (err) {
+//         console.log("Error => --  ", err);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// }
 
-        console.log("Data updated successfully");
-        res.status(200).json(response);
-
-
-    } catch (err) {
-        console.log("Error => --  ", err);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
-
-)
+// )
 
 
 router.delete('/:id', async (req, res) => {
@@ -203,7 +201,7 @@ router.get('/profile', jwtAuthMiddleware, async (req, res) => {
         console.log("User data is ", userData);
 
 
-      //  const userId = userData.id;
+        //  const userId = userData.id;
 
         const userId = userData.userData.id;
 
@@ -222,6 +220,55 @@ router.get('/profile', jwtAuthMiddleware, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 })
+
+router.put('/profileUpdate', jwtAuthMiddleware, async (req, res) => {
+    try {
+
+        const userData = req.user;
+        console.log("User data is ", userData);
+
+        const updatedPersonData = req.body // update data for person 
+
+        //  const userId = userData.id;
+        const userId = userData.userData.id;
+
+        console.log("User id is ", userId);
+
+        // if (!mongoose.Types.ObjectId.isValid(userId)) {
+        //     return res.status(400).json({ error: "Invalid person ID format" });
+        // }
+
+        const response = await Person.findByIdAndUpdate(userId, updatedPersonData, {
+            new: true, // return the updated document
+            runValidators: true, // run mongoes validation
+        });
+        console.log("Response is ");
+        console.log(response);
+
+
+        if (!response) {
+            return res.status(404).json({ error: "Person not found" });
+        }
+
+        console.log("Data updated successfully");
+        res.status(200).json(response);
+
+
+        res.status(200).json({ user });
+
+
+
+
+
+
+
+    } catch (err) {
+        console.log("Error => --  ", err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+
 
 
 
