@@ -202,11 +202,21 @@ router.get('/profile', jwtAuthMiddleware, async (req, res) => {
         const userData = req.user;
         console.log("User data is ", userData);
 
-         const userId = userData.id;
+
+      //  const userId = userData.id;
+
+        const userId = userData.userData.id;
+
+
+        console.log("User id is ", userId);
+
 
         const user = await Person.findById(userId); // jo name dete h vo response me return hota h abhi user key return hogi 
         console.log("Person Profile Fetched successfully");
-        res.status(200).json({user});
+
+        console.log("User data is ", user);
+
+        res.status(200).json({ user });
     } catch (err) {
         console.log("Error => --  ", err);
         res.status(500).json({ error: 'Internal server error' });
