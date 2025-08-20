@@ -12,7 +12,7 @@ const mongoose = require('mongoose'); // add for id validation
 const Person = require('../models/Person');  // export person file from modules directory 
 //Means: “go one level up (parent directory), then look for a models folder.”
 
-const personController = require('../controllers/personController');
+const personController = require('../controllers/personController.js');
 
 
 

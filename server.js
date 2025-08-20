@@ -6,10 +6,13 @@ require('dotenv').config();   // env file import and config
 //const db = require('./db');  // export db file from db.js to run it and start the mongo db server 
 
 const db = require('./config/db');
-const client = require('./db_postgresql');
+//const client = require('./db_postgresql');
 
 
 const Person = require('./models/Person');  // export person file from modules directory 
+
+const userRoutes = require('./routes/userRoutes');
+
 
 //menu
 
@@ -63,79 +66,78 @@ app.use('/menuItem',menuRoutes);
 
 
 
-//app.listen(PORT, () => console.log("listining on port 3000"))
-
-// Local Server URl => http://localhost:3000
-// Live server url => https://hotels-prnj.onrender.com
-
-
 
 //Postgress sql 
 // Get all users
-app.get('/users', async (req, res) => {
-  try {
-    const result = await client.query('SELECT * FROM users');
-    res.json({users : result.rows});
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
-// Insert a new user
-app.post('/users', async (req, res) => {
-  const { name, email } = req.body;
-  try {
-    const result = await client.query(
-      'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
-      [name, email]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Update user by ID
-app.put('/users/:id', async (req, res) => {
-  const userId = req.params.id;
-  const { name, email } = req.body;
-
-  try {
-    const result = await client.query(
-      'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *',
-      [name, email, userId]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Routes
+app.use('/users', userRoutes);
 
 
-// Delete user by ID
-app.delete('/users/:id', async (req, res) => {
-  const userId = req.params.id;
+// app.get('/users', async (req, res) => {
+//   try {
+//     const result = await client.query('SELECT * FROM users');
+//     res.json({users : result.rows});
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
-  try {
-    const result = await client.query(
-      'DELETE FROM users WHERE id = $1 RETURNING *',
-      [userId]
-    );
+// // Insert a new user
+// app.post('/users', async (req, res) => {
+//   const { name, email } = req.body;
+//   try {
+//     const result = await client.query(
+//       'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
+//       [name, email]
+//     );
+//     res.status(201).json(result.rows[0]);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+// // Update user by ID
+// app.put('/users/:id', async (req, res) => {
+//   const userId = req.params.id;
+//   const { name, email } = req.body;
 
-    res.json({ message: 'User deleted successfully', user: result.rows[0] });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+//   try {
+//     const result = await client.query(
+//       'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *',
+//       [name, email, userId]
+//     );
+
+//     if (result.rows.length === 0) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+
+//     res.json(result.rows[0]);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+
+// // Delete user by ID
+// app.delete('/users/:id', async (req, res) => {
+//   const userId = req.params.id;
+
+//   try {
+//     const result = await client.query(
+//       'DELETE FROM users WHERE id = $1 RETURNING *',
+//       [userId]
+//     );
+
+//     if (result.rows.length === 0) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+
+//     res.json({ message: 'User deleted successfully', user: result.rows[0] });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 
 
@@ -146,3 +148,10 @@ app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
 });
 
+
+
+
+//app.listen(PORT, () => console.log("listining on port 3000"))
+
+// Local Server URl => http://localhost:3000
+// Live server url => https://hotels-prnj.onrender.com
