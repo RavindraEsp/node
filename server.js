@@ -3,8 +3,9 @@ const express = require('express');
 const app = express()
 require('dotenv').config();   // env file import and config
 
-const db = require('./db');  // export db file from db.js to run it and start the mongo db server 
+//const db = require('./db');  // export db file from db.js to run it and start the mongo db server 
 
+const db = require('./config/db');
 const client = require('./db_postgresql');
 
 
@@ -36,9 +37,6 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/message', (req, res) => {
-  res.send('Welcome to hotel yadav ji How can we help You ravi.')
-})
 
 
 
@@ -72,7 +70,7 @@ app.use('/menuItem',menuRoutes);
 
 
 
-
+//Postgress sql 
 // Get all users
 app.get('/users', async (req, res) => {
   try {
