@@ -2,22 +2,45 @@ const mongoose = require('mongoose');
 const Person = require('../models/Person');
 const { generateToken } = require('../middleware/jwt'); // export person file from modules directory 
 
+const makeResponse = require("../shared_module/response");
+const statusCode = require("../shared_module/statusCode.json");
+
+
 // Signup
 exports.signup = async (req, res) => {
   try {
     const data = req.body;
     const newPerson = new Person(data);
     const response = await newPerson.save();
-
     const payload = { id: response.id, username: response.username };
     const token = generateToken(payload);
-
     return res.status(201).json({ response, token });
   } catch (err) {
     console.error("Signup Error: ", err);
-    res.status(500).json({ error: 'Internal server error' });
+
+    if (err.code === 11000) {
+
+
+      return res
+        .status(statusCode.OK) // if we not add then automatic it have 200 
+        .json(makeResponse(statusCode.Bad_Request,
+          false, "User already exists with this " + Object.keys(err.keyPattern)[0], // We can add here send or json both working 
+          {}
+        ))
+
+    }
+
+    res
+      .status(statusCode.Internal_Server_Error) // if we not add then automatic it have 200 
+      .json(makeResponse(statusCode.Internal_Server_Error, false, "Signup Failed", {}))// We can add here send or json both working ));
+
+
   }
+
+
+
 };
+
 
 
 // login

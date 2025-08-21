@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const mongoose = require('mongoose'); // add for id validation
+const {
+  signupValidation,
+  loginValidation,
+  updateProfileValidation,
+  deleteValidation,
+  validate
+} = require("../middleware/validation");
 
 
 //const Person = require('./models/Person');  // export person file from modules directory 
@@ -55,7 +62,7 @@ const { jwtAuthMiddleware, generateToken } = require('../middleware/jwt');  // e
 
 // )
 
-router.post('/signup', personController.signup);
+router.post('/signup',signupValidation, validate, personController.signup);
 router.post('/login',personController.login);
 router.delete('/:id', personController.delete);
 

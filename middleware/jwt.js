@@ -9,14 +9,14 @@ const jwtAuthMiddleware = (req, res, next) => {
     const autherization = req.headers.authorization;
     if (!autherization) {
         return res.status(401).json({
-            error: "Token not found"
+            msg: "Token not found"
         });
     }
 
     //Extract the jwt token from the request header
     const token = req.headers.authorization.split(' ')[1];
     if (!token) return res.status(401).json({
-        error: "Unauthorized"
+        msg: "Unauthorized"
     });
 
     try {
@@ -31,7 +31,7 @@ const jwtAuthMiddleware = (req, res, next) => {
     } catch (err) {
         console.error(err);
         return res.status(403).json({
-            error: "Invalid token"
+            msg: "Forbitten" // token expired
         });
 
     }
