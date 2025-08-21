@@ -19,8 +19,6 @@ exports.signup = async (req, res) => {
     console.error("Signup Error: ", err);
 
     if (err.code === 11000) {
-
-
       return res
         .status(statusCode.OK) // if we not add then automatic it have 200 
         .json(makeResponse(statusCode.Bad_Request,
