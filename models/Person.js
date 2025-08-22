@@ -43,6 +43,7 @@ const personSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+     profilePic: { type: String }
 });
 
 personSchema.pre('save', async function (next) {

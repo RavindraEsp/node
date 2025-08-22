@@ -10,15 +10,23 @@ const statusCode = require("../shared_module/statusCode.json");
 exports.signup = async (req, res) => {
   try {
     const data = req.body;
+
+console.log("File is:", req.file);
+     if (req.file) {
+      data.profilePic = req.file.path; // store path in DB
+    }
+
+    
     const newPerson = new Person(data);
     const response = await newPerson.save();
     const payload = { id: response.id, username: response.username };
     const token = generateToken(payload);
-    return res.status(201).json({ response, token });
+    return res.status(200).json({ response, token });
   } catch (err) {
     console.error("Signup Error: ", err);
 
     if (err.code === 11000) {
+
       return res
         .status(statusCode.OK) // if we not add then automatic it have 200 
         .json(makeResponse(statusCode.Bad_Request,

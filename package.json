@@ -16,6 +16,7 @@
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.1",
+    "multer": "^2.0.2",
     "nodemon": "^3.1.9",
     "pg": "^8.16.3",
     "prompt-sync": "^4.2.0"

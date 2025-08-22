@@ -10,10 +10,9 @@ const {
   validate
 } = require("../middleware/validation");
 
+//const { upload } = require("../middleware/upload.js"); // where you kept multer
 
-//const Person = require('./models/Person');  // export person file from modules directory 
-//→ Means: “look in a folder named models in the current directory.”
-
+const upload = require("../middleware/uploads.js"); // ✅ import properly
 
 
 const Person = require('../models/Person');  // export person file from modules directory 
@@ -62,7 +61,11 @@ const { jwtAuthMiddleware, generateToken } = require('../middleware/jwt');  // e
 
 // )
 
-router.post('/signup',signupValidation, validate, personController.signup);
+// router.post('/signup',signupValidation, validate, upload.single("profilePic"), personController.signup);
+router.post('/signup',upload.single("profilePic"),signupValidation, validate, personController.signup);
+
+//router.post('/signup', upload.single("profilePic"), personController.signup);
+
 router.post('/login',personController.login);
 router.delete('/:id', personController.delete);
 

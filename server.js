@@ -1,5 +1,6 @@
 //import express from 'express'
 const express = require('express');
+
 const app = express()
 require('dotenv').config();   // env file import and config
 
@@ -17,10 +18,12 @@ const userRoutes = require('./routes/userRoutes');
 //menu
 
 
+// const bodyParser = require('body-parser') //npm package user for parse api request
+// app.use(bodyParser.json()); //req.body
 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
 
-const bodyParser = require('body-parser') //npm package user for parse api request
-app.use(bodyParser.json()); //req.body
 const PORT = process.env.PORT || 3000 // itmeans ennv me PORT me kuchh number h to vo use karenngfa othher vise 3000 use hoga
 
 
@@ -38,9 +41,6 @@ app.use(logRequest);
 app.get('/', (req, res) => {
   res.send('Welcome to hotel how can i help you Hello World')
 })
-
-
-
 
 
 app.get('/idli', (req, res) => {

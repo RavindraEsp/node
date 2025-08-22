@@ -2,10 +2,10 @@ const { body, param, validationResult } = require("express-validator");
 
 // Signup validation rules
 exports.signupValidation = [
-  body("username")
+  body("name")
     .trim()
     .isLength({ min: 3, max: 20 })
-    .withMessage("Username must be between 3 and 20 characters"),
+    .withMessage("name must be between 3 and 20 characters"),
   body("password")
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters long"),
@@ -41,6 +41,8 @@ exports.deleteValidation = [
 
 
 exports.validate = (req, res, next) => {
+
+  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     // Send only the first error message or all depending on your need
