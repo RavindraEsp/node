@@ -14,6 +14,10 @@ const Person = require('./models/Person');  // export person file from modules d
 
 const userRoutes = require('./routes/userRoutes');
 
+const path = require("path"); // for see upload image in browser
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); //  for see upload image in browser
+
 
 //menu
 
